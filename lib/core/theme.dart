@@ -167,6 +167,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFFA8AEFF),
     brightMagenta: Color(0xFFD9B3FF),
     brightCyan: Color(0xFFB2EBFF),
+    searchHitBackground: Color(0x447C83FD),
+    searchHitForeground: Color(0xFFFFFFFF),
+    searchHitBackgroundCurrent: Color(0xFF7C83FD),
   );
 
   static const dracula = TerminalTheme(
@@ -190,6 +193,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFFD6ACFF),
     brightMagenta: Color(0xFFFF92DF),
     brightCyan: Color(0xFFA4FFFF),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 
   static const nord = TerminalTheme(
@@ -213,6 +219,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFF81A1C1),
     brightMagenta: Color(0xFFB48EAD),
     brightCyan: Color(0xFF8FBCBB),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 
   static const monokai = TerminalTheme(
@@ -236,6 +245,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFF66D9E8),
     brightMagenta: Color(0xFFAE81FF),
     brightCyan: Color(0xFFA1EFE4),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 
   static const solarizedDark = TerminalTheme(
@@ -259,6 +271,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFF268BD2),
     brightMagenta: Color(0xFFD33682),
     brightCyan: Color(0xFF2AA198),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 
   static const oneDark = TerminalTheme(
@@ -282,6 +297,9 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFF61AFEF),
     brightMagenta: Color(0xFFC678DD),
     brightCyan: Color(0xFF56B6C2),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 
   static const gruvbox = TerminalTheme(
@@ -305,5 +323,8 @@ class GarudanTerminalThemes {
     brightBlue: Color(0xFF83A598),
     brightMagenta: Color(0xFFD3869B),
     brightCyan: Color(0xFF8EC07C),
+    searchHitBackground: Color(0x44FFFFFF),
+    searchHitForeground: Color(0xFF000000),
+    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
   );
 }
