@@ -287,10 +287,10 @@ enum TerminalThemeName {
   final String label;
 }
 
-class TerminalThemes {
-  TerminalThemes._();
+class GarudanTerminalThemes {
+  GarudanTerminalThemes._();
 
-  static TerminalColors fromName(TerminalThemeName name) {
+  static TerminalTheme fromName(TerminalThemeName name) {
     return switch (name) {
       TerminalThemeName.amoled => amoled,
       TerminalThemeName.dracula => dracula,
@@ -302,7 +302,7 @@ class TerminalThemes {
     };
   }
 
-  static final amoled = TerminalColors(
+  static final amoled = TerminalTheme(
     background: const Color(0xFF000000),
     foreground: const Color(0xFFE0E0E0),
     cursor: const Color(0xFF7C83FD),
@@ -326,7 +326,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFFB2EBFF),
   );
 
-  static final dracula = TerminalColors(
+  static final dracula = TerminalTheme(
     background: const Color(0xFF282A36),
     foreground: const Color(0xFFF8F8F2),
     cursor: const Color(0xFFFF79C6),
@@ -350,7 +350,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFFA4FFFF),
   );
 
-  static final nord = TerminalColors(
+  static final nord = TerminalTheme(
     background: const Color(0xFF2E3440),
     foreground: const Color(0xFFD8DEE9),
     cursor: const Color(0xFF88C0D0),
@@ -374,7 +374,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFF8FBCBB),
   );
 
-  static final monokai = TerminalColors(
+  static final monokai = TerminalTheme(
     background: const Color(0xFF272822),
     foreground: const Color(0xFFF8F8F2),
     cursor: const Color(0xFFF8F8F0),
@@ -398,7 +398,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFFA1EFE4),
   );
 
-  static final solarizedDark = TerminalColors(
+  static final solarizedDark = TerminalTheme(
     background: const Color(0xFF002B36),
     foreground: const Color(0xFF839496),
     cursor: const Color(0xFF268BD2),
@@ -422,7 +422,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFF2AA198),
   );
 
-  static final oneDark = TerminalColors(
+  static final oneDark = TerminalTheme(
     background: const Color(0xFF282C34),
     foreground: const Color(0xFFABB2BF),
     cursor: const Color(0xFF528BFF),
@@ -446,7 +446,7 @@ class TerminalThemes {
     brightCyan: const Color(0xFF56B6C2),
   );
 
-  static final gruvbox = TerminalColors(
+  static final gruvbox = TerminalTheme(
     background: const Color(0xFF282828),
     foreground: const Color(0xFFEBDBB2),
     cursor: const Color(0xFFFE8019),

@@ -31,7 +31,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen>
   double _fontSize = AppConstants.defaultFontSize;
   String _termThemeName = 'amoled';
   TerminalColors get _termTheme =>
-      TerminalThemes.fromName(TerminalThemeName.values.firstWhere(
+      GarudanTerminalThemes.fromName(TerminalThemeName.values.firstWhere(
         (t) => t.name == _termThemeName,
         orElse: () => TerminalThemeName.amoled,
       ));
@@ -679,7 +679,7 @@ class _ThemePicker extends StatelessWidget {
         ...TerminalThemeName.values.map(
           (t) => ListTile(
             title: Text(t.label, style: const TextStyle(color: Colors.white)),
-            leading: _ThemeSwatch(theme: TerminalThemes.fromName(t)),
+            leading: _ThemeSwatch(theme: GarudanTerminalThemes.fromName(t)),
             trailing: current == t.name
                 ? const Icon(Icons.check, color: Color(0xFF7C83FD))
                 : null,
