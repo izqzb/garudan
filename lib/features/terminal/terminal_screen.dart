@@ -30,8 +30,8 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen>
 
   double _fontSize = AppConstants.defaultFontSize;
   String _termThemeName = 'amoled';
-  TerminalColors get _termTheme =>
-      GarudanTerminalThemes.fromName(TerminalThemeName.values.firstWhere(
+  TerminalTheme get _termTheme =>
+      GarudanGarudanTerminalThemes.fromName(TerminalThemeName.values.firstWhere(
         (t) => t.name == _termThemeName,
         orElse: () => TerminalThemeName.amoled,
       ));
@@ -425,7 +425,7 @@ class _TerminalPage extends StatefulWidget {
 
   final TerminalSession session;
   final double fontSize;
-  final TerminalColors theme;
+  final TerminalTheme theme;
   final VoidCallback onFontScaleStart;
   final void Function(double scale) onFontScaleUpdate;
 
@@ -679,7 +679,7 @@ class _ThemePicker extends StatelessWidget {
         ...TerminalThemeName.values.map(
           (t) => ListTile(
             title: Text(t.label, style: const TextStyle(color: Colors.white)),
-            leading: _ThemeSwatch(theme: GarudanTerminalThemes.fromName(t)),
+            leading: _ThemeSwatch(theme: GarudanGarudanTerminalThemes.fromName(t)),
             trailing: current == t.name
                 ? const Icon(Icons.check, color: Color(0xFF7C83FD))
                 : null,
@@ -697,7 +697,7 @@ class _ThemePicker extends StatelessWidget {
 
 class _ThemeSwatch extends StatelessWidget {
   const _ThemeSwatch({required this.theme});
-  final TerminalColors theme;
+  final TerminalTheme theme;
 
   @override
   Widget build(BuildContext context) {
