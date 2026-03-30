@@ -22,7 +22,7 @@ dependencies:
   dio: ^5.4.3
 
   # Terminal
-  xterm: ^4.1.0
+  xterm: ^3.4.0
 
   # Storage & Security
   flutter_secure_storage: ^9.0.0
