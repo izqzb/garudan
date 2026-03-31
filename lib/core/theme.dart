@@ -39,7 +39,7 @@ class GarudanTheme {
       ),
       titleTextStyle: GoogleFonts.inter(color: _onSurface, fontSize: 18, fontWeight: FontWeight.w600),
     ),
-    cardTheme: CardTheme(
+    cardTheme: CardThemeData(
       color: _surface2,
       elevation: 0,
       shape: RoundedRectangleBorder(
@@ -78,7 +78,7 @@ class GarudanTheme {
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
       behavior: SnackBarBehavior.floating,
     ),
-    dialogTheme: DialogTheme(
+    dialogTheme: DialogThemeData(
       backgroundColor: _surface2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
     ),
@@ -136,13 +136,13 @@ class GarudanTerminalThemes {
 
   static TerminalTheme fromName(TerminalThemeName name) {
     return switch (name) {
-      TerminalThemeName.amoled       => amoled,
-      TerminalThemeName.dracula      => dracula,
-      TerminalThemeName.nord         => nord,
-      TerminalThemeName.monokai      => monokai,
+      TerminalThemeName.amoled => amoled,
+      TerminalThemeName.dracula => dracula,
+      TerminalThemeName.nord => nord,
+      TerminalThemeName.monokai => monokai,
       TerminalThemeName.solarizedDark => solarizedDark,
-      TerminalThemeName.oneDark      => oneDark,
-      TerminalThemeName.gruvbox      => gruvbox,
+      TerminalThemeName.oneDark => oneDark,
+      TerminalThemeName.gruvbox => gruvbox,
     };
   }
 
@@ -160,16 +160,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFC792EA),
     cyan: Color(0xFF89DDFF),
     brightBlack: Color(0xFF4A4A4A),
-    brightWhite: Color(0xFFFFFFFF),
     brightRed: Color(0xFFFF7986),
     brightGreen: Color(0xFFA3FFE9),
     brightYellow: Color(0xFFFFE39A),
     brightBlue: Color(0xFFA8AEFF),
     brightMagenta: Color(0xFFD9B3FF),
     brightCyan: Color(0xFFB2EBFF),
+    brightWhite: Color(0xFFFFFFFF),
     searchHitBackground: Color(0x447C83FD),
-    searchHitForeground: Color(0xFFFFFFFF),
     searchHitBackgroundCurrent: Color(0xFF7C83FD),
+    searchHitForeground: Color(0xFFFFFFFF),
   );
 
   static const dracula = TerminalTheme(
@@ -186,16 +186,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFFF79C6),
     cyan: Color(0xFF8BE9FD),
     brightBlack: Color(0xFF6272A4),
-    brightWhite: Color(0xFFFFFFFF),
     brightRed: Color(0xFFFF6E6E),
     brightGreen: Color(0xFF69FF94),
     brightYellow: Color(0xFFFFFFA5),
     brightBlue: Color(0xFFD6ACFF),
     brightMagenta: Color(0xFFFF92DF),
     brightCyan: Color(0xFFA4FFFF),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFFFFFFF),
+    searchHitBackground: Color(0x44FF79C6),
+    searchHitBackgroundCurrent: Color(0xFFFF79C6),
+    searchHitForeground: Color(0xFF282A36),
   );
 
   static const nord = TerminalTheme(
@@ -212,16 +212,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFB48EAD),
     cyan: Color(0xFF88C0D0),
     brightBlack: Color(0xFF4C566A),
-    brightWhite: Color(0xFFECEFF4),
     brightRed: Color(0xFFBF616A),
     brightGreen: Color(0xFFA3BE8C),
     brightYellow: Color(0xFFEBCB8B),
     brightBlue: Color(0xFF81A1C1),
     brightMagenta: Color(0xFFB48EAD),
     brightCyan: Color(0xFF8FBCBB),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFECEFF4),
+    searchHitBackground: Color(0x4488C0D0),
+    searchHitBackgroundCurrent: Color(0xFF88C0D0),
+    searchHitForeground: Color(0xFF2E3440),
   );
 
   static const monokai = TerminalTheme(
@@ -238,16 +238,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFAE81FF),
     cyan: Color(0xFFA1EFE4),
     brightBlack: Color(0xFF75715E),
-    brightWhite: Color(0xFFF9F8F5),
     brightRed: Color(0xFFF92672),
     brightGreen: Color(0xFFA6E22E),
     brightYellow: Color(0xFFF4BF75),
     brightBlue: Color(0xFF66D9E8),
     brightMagenta: Color(0xFFAE81FF),
     brightCyan: Color(0xFFA1EFE4),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFF9F8F5),
+    searchHitBackground: Color(0x44AE81FF),
+    searchHitBackgroundCurrent: Color(0xFFAE81FF),
+    searchHitForeground: Color(0xFF272822),
   );
 
   static const solarizedDark = TerminalTheme(
@@ -264,16 +264,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFD33682),
     cyan: Color(0xFF2AA198),
     brightBlack: Color(0xFF586E75),
-    brightWhite: Color(0xFFFDF6E3),
     brightRed: Color(0xFFCB4B16),
     brightGreen: Color(0xFF859900),
     brightYellow: Color(0xFFB58900),
     brightBlue: Color(0xFF268BD2),
     brightMagenta: Color(0xFFD33682),
     brightCyan: Color(0xFF2AA198),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFFDF6E3),
+    searchHitBackground: Color(0x44268BD2),
+    searchHitBackgroundCurrent: Color(0xFF268BD2),
+    searchHitForeground: Color(0xFF002B36),
   );
 
   static const oneDark = TerminalTheme(
@@ -290,16 +290,16 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFC678DD),
     cyan: Color(0xFF56B6C2),
     brightBlack: Color(0xFF5C6370),
-    brightWhite: Color(0xFFFFFFFF),
     brightRed: Color(0xFFBE5046),
     brightGreen: Color(0xFF98C379),
     brightYellow: Color(0xFFD19A66),
     brightBlue: Color(0xFF61AFEF),
     brightMagenta: Color(0xFFC678DD),
     brightCyan: Color(0xFF56B6C2),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFFFFFFF),
+    searchHitBackground: Color(0x44528BFF),
+    searchHitBackgroundCurrent: Color(0xFF528BFF),
+    searchHitForeground: Color(0xFF282C34),
   );
 
   static const gruvbox = TerminalTheme(
@@ -316,15 +316,15 @@ class GarudanTerminalThemes {
     magenta: Color(0xFFB16286),
     cyan: Color(0xFF689D6A),
     brightBlack: Color(0xFF928374),
-    brightWhite: Color(0xFFEBDBB2),
     brightRed: Color(0xFFFB4934),
     brightGreen: Color(0xFFB8BB26),
     brightYellow: Color(0xFFFABD2F),
     brightBlue: Color(0xFF83A598),
     brightMagenta: Color(0xFFD3869B),
     brightCyan: Color(0xFF8EC07C),
-    searchHitBackground: Color(0x44FFFFFF),
-    searchHitForeground: Color(0xFF000000),
-    searchHitBackgroundCurrent: Color(0xFFFFFFFF),
+    brightWhite: Color(0xFFEBDBB2),
+    searchHitBackground: Color(0x44FE8019),
+    searchHitBackgroundCurrent: Color(0xFFFE8019),
+    searchHitForeground: Color(0xFF282828),
   );
 }

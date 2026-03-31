@@ -14,7 +14,7 @@ dependencies:
   dartssh2: ^2.8.2
   web_socket_channel: ^2.4.0
   dio: ^5.4.3
-  xterm: ^3.4.0
+  xterm: ^4.0.0
   flutter_secure_storage: ^9.0.0
   shared_preferences: ^2.2.3
   local_auth: ^2.3.0
