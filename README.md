@@ -1,6 +1,6 @@
 # Garudan
 
-Open-source mobile control panel for self-hosted servers. Built with Flutter.
+Open-source mobile control panel for self-hosted / owned  servers. Built with Flutter.
 
 **Best-in-class SSH terminal · Docker management · File browser · System monitoring**
 
