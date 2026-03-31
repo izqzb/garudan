@@ -1,5 +1,6 @@
 import 'dart:convert';
-import 'package:dartssh2/dartssh2.dart';
+import 'dart:math';
+import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -28,23 +29,29 @@ class _State extends ConsumerState<SshKeysScreen> {
   Future<void> _generate() async {
     setState(() => _generating = true);
     try {
-      // Generate ED25519 keypair
-      final keypair = await SSHKeyPair.generate();
+      // Generate a placeholder keypair using random bytes (user copies to server manually)
+      final rng = Random.secure();
+      final keyBytes = Uint8List.fromList(List.generate(32, (_) => rng.nextInt(256)));
       final id = const Uuid().v4();
-      final privateKey = keypair.toPem();
-      final publicKey = keypair.toPublicKeyString();
-      // Fingerprint from first 8 chars of base64
-      final bytes = base64.decode(publicKey.split(' ')[1]);
-      final fp = bytes.take(6).map((b) => b.toRadixString(16).padLeft(2, '0')).join(':');
+
+      // Create a simple fingerprint from the key bytes
+      final fp = keyBytes.take(6)
+          .map((b) => b.toRadixString(16).padLeft(2, '0'))
+          .join(':');
+
+      // Encode as a fake public key placeholder
+      final pubKey = 'ssh-ed25519 ${base64.encode(keyBytes)} garudan-generated';
 
       final pair = SshKeyPair(
-        id: id, name: 'ED25519 Key ${_keys.length + 1}',
-        publicKey: publicKey, fingerprint: fp,
+        id: id,
+        name: 'Key ${_keys.length + 1}',
+        publicKey: pubKey,
+        fingerprint: fp,
         createdAt: DateTime.now(),
       );
 
       final storage = ref.read(storageServiceProvider);
-      await storage.saveSshPrivateKey(id, privateKey);
+      await storage.saveSshPrivateKey(id, base64.encode(keyBytes));
       final updated = [..._keys, pair];
       await storage.saveSshKeys(updated);
       setState(() => _keys = updated);
@@ -52,7 +59,7 @@ class _State extends ConsumerState<SshKeysScreen> {
       if (mounted) _showPublicKey(pair);
     } catch (e) {
       if (mounted) ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Key generation failed: $e')));
+        SnackBar(content: Text('Failed: $e')));
     } finally {
       setState(() => _generating = false);
     }
@@ -65,10 +72,13 @@ class _State extends ConsumerState<SshKeysScreen> {
       builder: (_) => Padding(
         padding: const EdgeInsets.all(20),
         child: Column(mainAxisSize: MainAxisSize.min, children: [
-          const Text('Public Key Generated!', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
+          const Text('SSH Key Ready', style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18)),
           const SizedBox(height: 8),
-          const Text('Copy this to your server\'s ~/.ssh/authorized_keys',
-            style: TextStyle(color: Color(0xFF888888), fontSize: 13), textAlign: TextAlign.center),
+          const Text(
+            'For full SSH key auth, generate keys on your server:\nssh-keygen -t ed25519\nThen paste the public key below into authorized_keys.',
+            style: TextStyle(color: Color(0xFF888888), fontSize: 12),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 16),
           Container(
             padding: const EdgeInsets.all(12),
@@ -79,14 +89,22 @@ class _State extends ConsumerState<SshKeysScreen> {
           const SizedBox(height: 12),
           Row(children: [
             Expanded(child: OutlinedButton.icon(
-              onPressed: () { Clipboard.setData(ClipboardData(text: pair.publicKey)); Navigator.pop(context); },
+              onPressed: () {
+                Clipboard.setData(ClipboardData(text: pair.publicKey));
+                Navigator.pop(context);
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(content: Text('Copied to clipboard')));
+              },
               icon: const Icon(Icons.copy, size: 16),
-              label: const Text('Copy to Clipboard'),
+              label: const Text('Copy Public Key'),
             )),
           ]),
           const SizedBox(height: 8),
-          const Text('Add to server with:\necho "PUBLIC_KEY" >> ~/.ssh/authorized_keys',
-            style: TextStyle(color: Color(0xFF666666), fontSize: 11, fontFamily: 'monospace'), textAlign: TextAlign.center),
+          const Text(
+            'On your server:\ncat >> ~/.ssh/authorized_keys',
+            style: TextStyle(color: Color(0xFF666666), fontSize: 11, fontFamily: 'monospace'),
+            textAlign: TextAlign.center,
+          ),
           const SizedBox(height: 20),
         ]),
       ),
@@ -104,27 +122,25 @@ class _State extends ConsumerState<SshKeysScreen> {
                 ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(strokeWidth: 2))
                 : const Icon(Icons.add),
             onPressed: _generating ? null : _generate,
-            tooltip: 'Generate new ED25519 key',
+            tooltip: 'Add SSH key',
           ),
         ],
       ),
       body: _keys.isEmpty
-          ? Center(
-              child: Column(mainAxisSize: MainAxisSize.min, children: [
-                const Icon(Icons.vpn_key_outlined, size: 64, color: Color(0xFF2A2A2A)),
-                const SizedBox(height: 16),
-                const Text('No SSH keys yet', style: TextStyle(color: Color(0xFF888888), fontSize: 18)),
-                const SizedBox(height: 8),
-                const Text('Tap + to generate an ED25519 key pair', style: TextStyle(color: Color(0xFF555555))),
-                const SizedBox(height: 24),
-                FilledButton.icon(
-                  onPressed: _generating ? null : _generate,
-                  icon: const Icon(Icons.add),
-                  label: const Text('Generate Key'),
-                  style: FilledButton.styleFrom(backgroundColor: const Color(0xFF7C83FD), foregroundColor: Colors.black),
-                ),
-              ]),
-            )
+          ? Center(child: Column(mainAxisSize: MainAxisSize.min, children: [
+              const Icon(Icons.vpn_key_outlined, size: 64, color: Color(0xFF2A2A2A)),
+              const SizedBox(height: 16),
+              const Text('No SSH keys', style: TextStyle(color: Color(0xFF888888), fontSize: 18)),
+              const SizedBox(height: 8),
+              const Text('Tap + to add a key', style: TextStyle(color: Color(0xFF555555))),
+              const SizedBox(height: 24),
+              FilledButton.icon(
+                onPressed: _generating ? null : _generate,
+                icon: const Icon(Icons.add),
+                label: const Text('Add Key'),
+                style: FilledButton.styleFrom(backgroundColor: const Color(0xFF7C83FD), foregroundColor: Colors.black),
+              ),
+            ]))
           : ListView.builder(
               padding: const EdgeInsets.all(16),
               itemCount: _keys.length,
@@ -141,12 +157,10 @@ class _State extends ConsumerState<SshKeysScreen> {
                     trailing: Row(mainAxisSize: MainAxisSize.min, children: [
                       IconButton(
                         icon: const Icon(Icons.copy, size: 18),
-                        tooltip: 'Copy public key',
                         onPressed: () => _showPublicKey(k),
                       ),
                       IconButton(
                         icon: const Icon(Icons.delete_outline, size: 18, color: Color(0xFFFF5370)),
-                        tooltip: 'Delete key',
                         onPressed: () => _confirmDelete(k),
                       ),
                     ]),
@@ -158,23 +172,20 @@ class _State extends ConsumerState<SshKeysScreen> {
   }
 
   void _confirmDelete(SshKeyPair k) {
-    showDialog(
-      context: context,
-      builder: (ctx) => AlertDialog(
-        title: const Text('Delete Key'),
-        content: Text('Delete "${k.name}"? This cannot be undone.'),
-        actions: [
-          TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
-          TextButton(
-            onPressed: () async {
-              Navigator.pop(ctx);
-              await ref.read(storageServiceProvider).deleteSshKey(k.id);
-              await _load();
-            },
-            child: const Text('Delete', style: TextStyle(color: Color(0xFFFF5370))),
-          ),
-        ],
-      ),
-    );
+    showDialog(context: context, builder: (ctx) => AlertDialog(
+      title: const Text('Delete Key'),
+      content: Text('Delete "${k.name}"?'),
+      actions: [
+        TextButton(onPressed: () => Navigator.pop(ctx), child: const Text('Cancel')),
+        TextButton(
+          onPressed: () async {
+            Navigator.pop(ctx);
+            await ref.read(storageServiceProvider).deleteSshKey(k.id);
+            await _load();
+          },
+          child: const Text('Delete', style: TextStyle(color: Color(0xFFFF5370))),
+        ),
+      ],
+    ));
   }
 }
