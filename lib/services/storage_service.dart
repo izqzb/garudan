@@ -120,4 +120,10 @@ class StorageService {
     CommandSnippet(id: 'last',    label: 'last logins',  command: 'last -n 10'),
     CommandSnippet(id: 'jctl',    label: 'journalctl',   command: 'journalctl -f'),
   ];
+
+  String getTerminalFontFamily() =>
+      _prefs.getString('terminal_font_family') ?? 'JetBrains Mono';
+
+  Future<void> setTerminalFontFamily(String f) =>
+      _prefs.setString('terminal_font_family', f);
 }

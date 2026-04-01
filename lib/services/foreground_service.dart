@@ -1,11 +1,10 @@
-import 'dart:async';
-import 'package:flutter/material.dart';
+import "dart:isolate";
+import "dart:isolate";
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
 
 class TerminalForegroundService {
   TerminalForegroundService._();
   static final instance = TerminalForegroundService._();
-
   bool _running = false;
 
   Future<void> init() async {
@@ -16,18 +15,13 @@ class TerminalForegroundService {
         channelDescription: 'Keeps terminal sessions alive',
         channelImportance: NotificationChannelImportance.LOW,
         priority: NotificationPriority.LOW,
-        iconData: const NotificationIconData(
-          resType: ResourceType.mipmap,
-          resPrefix: ResourcePrefix.ic,
-          name: 'launcher',
-        ),
       ),
       iosNotificationOptions: const IOSNotificationOptions(
         showNotification: true,
         playSound: false,
       ),
       foregroundTaskOptions: const ForegroundTaskOptions(
-        interval: 30000, // heartbeat every 30s
+        interval: 30000,
         isOnceEvent: false,
         autoRunOnBoot: false,
         allowWakeLock: true,
@@ -37,10 +31,7 @@ class TerminalForegroundService {
   }
 
   Future<void> start(String serverName) async {
-    if (_running) {
-      await update(serverName);
-      return;
-    }
+    if (_running) { await update(serverName); return; }
     await FlutterForegroundTask.startService(
       notificationTitle: 'Terminal active',
       notificationText: serverName,
@@ -72,14 +63,11 @@ void _taskCallback() {
 
 class _TerminalTaskHandler extends TaskHandler {
   @override
-  Future<void> onStart(DateTime timestamp, TaskStarter starter) async {}
+  void onStart(DateTime timestamp, SendPort? sendPort) {}
 
   @override
-  void onRepeatEvent(DateTime timestamp) {
-    // Heartbeat — keeps service alive
-    FlutterForegroundTask.sendDataToMain({'type': 'heartbeat', 'ts': timestamp.toIso8601String()});
-  }
+  void onRepeatEvent(DateTime timestamp, SendPort? sendPort) {}
 
   @override
-  Future<void> onDestroy(DateTime timestamp) async {}
+  void onDestroy(DateTime timestamp, SendPort? sendPort) {}
 }
