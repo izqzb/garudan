@@ -45,7 +45,7 @@ class TerminalConnection {
   Future<void> _attempt({required bool primary}) async {
     _usingFallback = !primary;
     final url = primary ? _primaryUrl : (_fallbackUrl ?? _primaryUrl);
-    _writeStatus('Trying $url');
+    _writeStatus('Connecting...');
     try {
       _channel = IOWebSocketChannel.connect(Uri.parse(url),
         connectTimeout: AppConstants.connectTimeout,
@@ -66,7 +66,7 @@ class TerminalConnection {
       try { _channel?.sink.close(); } catch (_) {}
       _channel = null;
       if (primary && _fallbackUrl != null) {
-        _writeStatus('Primary failed. Trying fallback...');
+        _writeStatus('Trying fallback...');
         await _attempt(primary: false);
       } else {
         _writeStatus('Failed: $e');
