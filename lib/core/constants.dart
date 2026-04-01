@@ -2,8 +2,8 @@ class AppConstants {
   AppConstants._();
   static const String appName = 'Garudan';
   static const String appVersion = '1.1.0';
-  static const String githubUrl = 'https://github.com/ajayaimannan/garudan';
-  static const String githubServerUrl = 'https://github.com/ajayaimannan/garudan-server';
+  static const String githubUrl = 'https://github.com/izqzb/garudan';
+  static const String githubServerUrl = 'https://github.com/izqzb/garudan-server';
   static const String netdataDocsUrl = 'https://learn.netdata.cloud/docs/installing';
   static const String gotifyDocsUrl = 'https://gotify.net/docs/install';
 
@@ -20,7 +20,7 @@ class AppConstants {
   static const String keyAlertRamThreshold = 'alert_ram_threshold';
   static const String keyAlertsEnabled = 'alerts_enabled';
 
-  static const double defaultFontSize = 14.0;
+  static const double defaultFontSize = 10.0;
   static const double minFontSize = 8.0;
   static const double maxFontSize = 28.0;
 
