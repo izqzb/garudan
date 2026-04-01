@@ -1,7 +1,5 @@
+import 'dart:isolate';
 import 'package:flutter_foreground_task/flutter_foreground_task.dart';
-
-/// Foreground service that keeps SSH sessions alive when app is backgrounded.
-/// Uses flutter_foreground_task 6.5.0 API.
 
 @pragma('vm:entry-point')
 void terminalForegroundCallback() {
@@ -14,7 +12,6 @@ class _KeepAliveHandler extends TaskHandler {
 
   @override
   void onRepeatEvent(DateTime timestamp, SendPort? sendPort) {
-    // Ping the main isolate — main isolate pings SSH connections
     sendPort?.send('keepalive');
   }
 
@@ -25,7 +22,6 @@ class _KeepAliveHandler extends TaskHandler {
 class TerminalForegroundService {
   TerminalForegroundService._();
   static final instance = TerminalForegroundService._();
-
   bool _running = false;
   bool get isRunning => _running;
 
@@ -43,7 +39,7 @@ class TerminalForegroundService {
         playSound: false,
       ),
       foregroundTaskOptions: const ForegroundTaskOptions(
-        interval: 20000, // ping every 20s — same as old app
+        interval: 20000,
         isOnceEvent: false,
         autoRunOnBoot: false,
         allowWakeLock: true,
@@ -53,10 +49,7 @@ class TerminalForegroundService {
   }
 
   Future<void> start({required int sessionCount}) async {
-    if (_running) {
-      await _update(sessionCount);
-      return;
-    }
+    if (_running) { await _update(sessionCount); return; }
     try {
       await FlutterForegroundTask.startService(
         notificationTitle: 'Terminal active',
@@ -67,11 +60,11 @@ class TerminalForegroundService {
     } catch (_) {}
   }
 
-  Future<void> _update(int sessionCount) async {
+  Future<void> _update(int count) async {
     try {
       await FlutterForegroundTask.updateService(
         notificationTitle: 'Terminal active',
-        notificationText: '$sessionCount session${sessionCount != 1 ? 's' : ''} running',
+        notificationText: '$count session${count != 1 ? 's' : ''} running',
       );
     } catch (_) {}
   }
@@ -80,9 +73,7 @@ class TerminalForegroundService {
 
   Future<void> stop() async {
     if (!_running) return;
-    try {
-      await FlutterForegroundTask.stopService();
-    } catch (_) {}
+    try { await FlutterForegroundTask.stopService(); } catch (_) {}
     _running = false;
   }
 
