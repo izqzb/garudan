@@ -55,7 +55,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen>
     TerminalForegroundService.instance.init();
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       await TerminalForegroundService.instance.requestBatteryExemption();
-      FlutterForegroundTask.addTaskDataCallback(_onKeepAlive);
+      // keepalive handled by foreground service ping interval
       await _openFirstSession();
     });
     try { WakelockPlus.enable(); } catch (_) {}
@@ -153,7 +153,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen>
   }
 
   Future<void> _exitTerminal() async {
-    FlutterForegroundTask.removeTaskDataCallback(_onKeepAlive);
+    
     await _mgr.closeAll();
     await TerminalForegroundService.instance.stop();
     try { WakelockPlus.disable(); } catch (_) {}
@@ -228,7 +228,7 @@ class _TerminalScreenState extends ConsumerState<TerminalScreen>
 
   @override
   void dispose() {
-    FlutterForegroundTask.removeTaskDataCallback(_onKeepAlive);
+    
     WidgetsBinding.instance.removeObserver(this);
     _pageCtrl.dispose();
     try { WakelockPlus.disable(); } catch (_) {}
