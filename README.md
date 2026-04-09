@@ -31,7 +31,7 @@ garudan-server setup
 garudan-server start
 ```
 
-See [garudan-server](https://github.com/ajayaimannan/garudan-server) for full docs.
+See [garudan-server](https://github.com/izqzb/garudan-server) for full docs.
 
 ## Connect from Anywhere
 
@@ -47,7 +47,7 @@ Find IP with `ip addr | grep 192.168` — use `http://192.168.x.x:8400` on home 
 ## Build from Source
 
 ```bash
-git clone https://github.com/ajayaimannan/garudan
+git clone https://github.com/izqzb/garudan
 cd garudan
 flutter pub get
 flutter build apk --release
